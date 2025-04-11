@@ -7,7 +7,7 @@ from collections import defaultdict
 from multiprocessing import Pool, cpu_count
 
 def sanitize_output(content):
-    """Removes malformed bytes and non-printable characters while preserving hex values."""
+    """Removes malformed bytes and non-printable characters."""
     try:
         cleaned = content.decode('utf-8', errors='ignore')
         cleaned = cleaned.replace('\x00', '')  # Remove null bytes
@@ -17,7 +17,7 @@ def sanitize_output(content):
         return ""
 
 def search_stream(stream, regex_patterns):
-    """Searches for regex patterns in a TCP/UDP stream using regex, collecting multiple findings."""
+    """Searches for regex patterns in a TCP/UDP stream using regex."""
     try:
         stream_content_lower = stream.lower()
     except:
@@ -53,7 +53,7 @@ def parse_http_payload(payload):
     return None
 
 def process_session(args):
-    """Worker function to process a single TCP/UDP session."""
+    """Process a single TCP/UDP session."""
     session_key, payloads, regex_patterns, port_specific_patterns, protocol = args
     reassembled_stream = b''.join(payloads)  
 
@@ -150,10 +150,10 @@ if __name__ == "__main__":
         # ELF dropper
         (rb"\\x45\\x4c\\x46", {"Tag": "ELF Dropper"}),
 
-	    # IZ1H9
-	    (rb"/bin/busybox iz1h9", {"Botnet": "IZ1H9"}),
-	    # APEP
-	    (rb"/bin/busybox apep|guccix86", {"Botnet": "Apep"}),
+	# IZ1H9
+	(rb"/bin/busybox iz1h9", {"Botnet": "IZ1H9"}),
+	# APEP
+	(rb"/bin/busybox apep|guccix86", {"Botnet": "Apep"}),
         # KURC
         (rb"/bin/busybox kurc", {"Botnet": "Kurc"}),
         # UNSTABLE
